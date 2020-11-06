@@ -1,5 +1,5 @@
 FROM java:8
 ARG VERSION
-COPY demo/target/$VERSION .
+COPY demo/target/$VERSION.jar .
 EXPOSE 8080
 ENTRYPOINT java -jar $VERSION.jar

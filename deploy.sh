@@ -2,7 +2,7 @@
 
 #Builds the image passing VERSION as parameter
 
-docker build --build-arg VERSION=${VERSION}.jar --tag medraut/spring-app:${VERSION} .
+docker build --build-arg VERSION=${VERSION} --tag medraut/spring-app:${VERSION} .
 
 #Logs in into docker hub
 
