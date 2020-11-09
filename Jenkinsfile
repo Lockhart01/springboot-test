@@ -59,7 +59,7 @@ pipeline{
                     artifacts: [
                         [artifactId: "spring-app",
                         classifier: '',
-                        file: "${WORKSPACE}/demo/target/${VERSION}.jar",
+                        file: "${WORKSPACE}/spring-app-${NAME}.tar.gz",
                         type: 'tar.gz']
                     ]
                 );		
