@@ -24,10 +24,8 @@ pipeline{
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace'],[$class: 'LocalBranch', localBranch: "**"]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Lockhart01/springboot-test.git']]])
                 sh 'cd demo && mvn clean package'
-                sh 'find ./demo/target -name "*.jar" | cut -d"/" -f4 | cut -d"." -f1 > version.txt'
-                script{
-                    String fileContents = new File('version.txt').text
-                    env.VERSION = fileContents
+                environment{
+                    VERSION = sh(find ./demo/target -name "*.jar" | cut -d"/" -f4 | cut -d"." -f1 > version.txt)
                 }
                 stash includes: '', name: 'app', allowEmpty: false
                 sh "echo ${VERSION}"
