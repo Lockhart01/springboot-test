@@ -41,27 +41,26 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]) {
                     sh 'chmod +x deploy.sh && ./deploy.sh'
                 }
-                stash includes: 'demo/target/*.jar', name: 'artifact', allowEmpty: false
             }
 
         }
         stage('storage jar'){
             steps{
-                unstash 'artifact'
-                sh 'ls -al'
+                unstash 'app'
+                sh 'tar -czvf spring-app-${NAME}.tar.gz ${WORKSPACE}'
                 nexusArtifactUploader(
                     nexusVersion: "nexus3",
                     protocol: "http",
                     nexusUrl: "10.5.0.9:8081",
                     groupId: '',
-                    version: "${VERSION}",
+                    version: "${NAME}",
                     repository: "spring-app",
                     credentialsId: "nexus-creds",
                     artifacts: [
-                        [artifactId: "${VERSION}",
+                        [artifactId: "spring-app",
                         classifier: '',
                         file: "${WORKSPACE}/demo/target/${VERSION}.jar",
-                        type: 'jar']
+                        type: 'tar.gz']
                     ]
                 );		
             }
