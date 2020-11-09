@@ -60,7 +60,7 @@ pipeline{
                     artifacts: [
                         [artifactId: "${VERSION}",
                         classifier: '',
-                        file: "${WORKSPACE}/${VERSION}.jar",
+                        file: "${WORKSPACE}/demo/target/${VERSION}.jar",
                         type: 'jar']
                     ]
                 );		
