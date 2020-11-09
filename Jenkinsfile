@@ -41,13 +41,13 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]) {
                     sh 'chmod +x deploy.sh && ./deploy.sh'
                 }
-                stash includes: 'demo/target/*.jar', name: 'app', allowEmpty: false
+                stash includes: 'demo/target/*.jar', name: 'artifact', allowEmpty: false
             }
 
         }
         stage('storage jar'){
             steps{
-                unstash 'app'
+                unstash 'artifact'
                 nexusArtifactUploader(
                     nexusVersion: "nexus3",
                     protocol: "http",
@@ -59,7 +59,7 @@ pipeline{
                     artifacts: [
                         [artifactId: "${VERSION}",
                         classifier: '',
-                        file: "${WORKSPACE}/*.jar",
+                        file: "${WORKSPACE}/${VERSION}.jar",
                         type: 'jar']
                     ]
                 );		
