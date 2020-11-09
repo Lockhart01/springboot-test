@@ -35,6 +35,9 @@ pipeline{
        
         }
         stage('Build docker image'){
+            agent{
+                label 'docker'
+            }
             steps{
                 unstash 'app'
                 withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]) {
