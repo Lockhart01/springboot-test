@@ -48,6 +48,7 @@ pipeline{
         stage('storage jar'){
             steps{
                 unstash 'artifact'
+                sh 'ls -al'
                 nexusArtifactUploader(
                     nexusVersion: "nexus3",
                     protocol: "http",
