@@ -36,6 +36,7 @@ pipeline{
             }
             
             steps{
+                sh "echo ${VERSION}"
                 unstash 'app'
                 withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]) {
                     sh 'chmod +x deploy.sh && ./deploy.sh'
