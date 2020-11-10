@@ -1,5 +1,6 @@
 FROM java:8
 ARG VERSION
+RUN export APP=$VERSION
 COPY demo/target/$VERSION.jar .
 EXPOSE 8080
-ENTRYPOINT java -jar $VERSION.jar
+ENTRYPOINT java -jar $APP.jar
