@@ -16,6 +16,6 @@ SpringApplication.run(DemoApplication.class, args);
 
 @GetMapping("/hello")
 public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-return String.format("Greetings %s!", name);
+return String.format("Greetings from the last version %s!", name);
 }
 }
