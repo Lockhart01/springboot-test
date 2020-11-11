@@ -1,0 +1,42 @@
+pipeline{
+    parameters{
+         string(name: 'SERVER', defaultValue: '54.245.53.84', description: 'ip of the server to deploy')
+         string(name: 'VERSION', defaultValue: 'demo-2', description: 'Tag of the image to deploy to the server')
+    }
+    agent any
+    stages{
+        stage('prepare'){
+            steps{
+                script{
+                    Date date = new Date()
+                    env.NAME = date.format("yyyy-MM-dd")
+                }
+            }
+            post{
+                always{
+                    script{
+                        currentBuild.displayName = "deploy-of-${NAME}"
+                    }
+                }
+            }
+        }
+        /*stage('deploy'){
+            steps{
+                withCredentials([sshUserPrivateKey(credentialsId: 'agent-key', keyFileVariable: 'SSHKEY', passphraseVariable: '', usernameVariable: '')]) {
+                    sh 'echo $(whoami)'
+                    sh 'ssh -i ${SSHKEY} jenkins@${SERVER} /bin/bash && docker service update --image medraut/spring-app:${VERSION} spring-app'
+                }
+            }
+        }*/
+        
+        stage('deploy'){
+            agent{
+                label 'docker'
+            }
+            steps{
+                sh 'docker service update --image medraut/spring-app:${VERSION} spring-app'
+            }
+        }
+        
+    }
+}
