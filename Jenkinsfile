@@ -43,28 +43,6 @@ pipeline{
                 }
             }
 
-        }
-        stage('storage jar'){
-            steps{
-                unstash 'app'
-                sh 'tar -czvf spring-app-${NAME}.tar.gz ${WORKSPACE}'
-                nexusArtifactUploader(
-                    nexusVersion: "nexus3",
-                    protocol: "http",
-                    nexusUrl: "10.5.0.9:8081",
-                    groupId: '',
-                    version: "${NAME}",
-                    repository: "spring-app",
-                    credentialsId: "nexus-creds",
-                    artifacts: [
-                        [artifactId: "spring-app",
-                        classifier: '',
-                        file: "${WORKSPACE}/spring-app-${NAME}.tar.gz",
-                        type: 'tar.gz']
-                    ]
-                );		
-            }
-        }
-        
+        }       
     }
 }
