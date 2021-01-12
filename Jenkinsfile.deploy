@@ -1,6 +1,6 @@
 pipeline{
     parameters{
-         string(name: 'SERVER', defaultValue: '54.245.53.84', description: 'ip of the server to deploy')
+         string(name: 'SERVER', defaultValue: '', description: 'ip of the server to deploy')
          string(name: 'VERSION', defaultValue: 'demo-2', description: 'Tag of the image to deploy to the server')
     }
     agent any
